@@ -130,5 +130,7 @@ module.exports = {
   getArchiveFilepath,
   getBundleFilepath,
   getBintrayApiKey,
+  getNugetApiKey,
+  getNexusPassword,
   getNpmToken,
 };
