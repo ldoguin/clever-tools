@@ -14,6 +14,9 @@ const bintray = {
   subject: 'clevercloud',
   user: 'ci-clevercloud',
 };
+const nexus = {
+  user: 'ci'
+};
 const git = {
   email: 'ci@clever-cloud.com',
   name: 'Clever Cloud CI',
@@ -86,6 +89,23 @@ function getBintrayApiKey () {
   }
   return apiKey;
 }
+
+function getNugetApiKey () {
+  const apiKey = process.env.NUGET_API_KEY;
+  if (!apiKey) {
+    throw new Error('Could not read nuget API key!');
+  }
+  return apiKey;
+}
+
+function getNexusPassword () {
+  const apiKey = process.env.NEXUS_PASSWORD;
+  if (!apiKey) {
+    throw new Error('Could not read nexus ci user password!');
+  }
+  return apiKey;
+}
+
 
 function getNpmToken () {
   const token = process.env.NPM_TOKEN;

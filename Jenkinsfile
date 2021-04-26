@@ -6,6 +6,8 @@ pipeline {
     S3_SECRET_KEY = credentials('CELLAR_CC_TOOLS_SECRET_ACCESS_KEY')
     BINTRAY_API_KEY = credentials('BINTRAY_CC_TOOLS_API_KEY')
     NPM_TOKEN = credentials('NPM_TOKEN')
+    NEXUS_PASSWORD = credentials('NEXUS_PASSWORD')
+    NUGET_API_KEY = credentials('NUGET_API_KEY')
   }
   options {
     buildDiscarder(logRotator(daysToKeepStr: '5', numToKeepStr: '10', artifactDaysToKeepStr: '5', artifactNumToKeepStr: '10'))
@@ -30,57 +32,62 @@ pipeline {
         beforeAgent true
       }
       parallel {
-        stage('cellar') {
+        // stage('cellar') {
+        //   steps {
+        //     sh 'node scripts/job-publish-cellar.js'
+        //   }
+        // }
+        stage('nexus') {
           steps {
-            sh 'node scripts/job-publish-cellar.js'
+            sh 'node scripts/job-publish-nexus.js'
           }
         }
-        stage('bintray') {
-          steps {
-            sh 'node scripts/job-publish-bintray.js'
-          }
-        }
-        stage('arch') {
-          steps {
-            script {
-              sshagent (credentials: ['CI_CLEVER_CLOUD_SSH_KEY']) {
-                sh 'node ./scripts/job-publish-arch.js'
-              }
-            }
-          }
-        }
-        stage('brew') {
-          steps {
-            script {
-              sshagent (credentials: ['CI_CLEVER_CLOUD_SSH_KEY']) {
-                sh 'node ./scripts/job-publish-brew.js'
-              }
-            }
-          }
-        }
-        stage('exherbo') {
-          steps {
-            script {
-              sshagent (credentials: ['CI_CLEVER_CLOUD_SSH_KEY']) {
-                sh 'node ./scripts/job-publish-exherbo.js'
-              }
-            }
-          }
-        }
-        stage('npm') {
-          steps {
-            sh 'node ./scripts/job-publish-npm.js'
-          }
-        }
-        stage('dockerhub') {
-          steps {
-            script {
-              sshagent (credentials: ['CI_CLEVER_CLOUD_SSH_KEY']) {
-                sh 'node ./scripts/job-publish-dockerhub.js'
-              }
-            }
-          }
-        }
+        // stage('bintray') {
+        //   steps {
+        //     sh 'node scripts/job-publish-bintray.js'
+        //   }
+        // }
+        // stage('arch') {
+        //   steps {
+        //     script {
+        //       sshagent (credentials: ['CI_CLEVER_CLOUD_SSH_KEY']) {
+        //         sh 'node ./scripts/job-publish-arch.js'
+        //       }
+        //     }
+        //   }
+        // }
+        // stage('brew') {
+        //   steps {
+        //     script {
+        //       sshagent (credentials: ['CI_CLEVER_CLOUD_SSH_KEY']) {
+        //         sh 'node ./scripts/job-publish-brew.js'
+        //       }
+        //     }
+        //   }
+        // }
+        // stage('exherbo') {
+        //   steps {
+        //     script {
+        //       sshagent (credentials: ['CI_CLEVER_CLOUD_SSH_KEY']) {
+        //         sh 'node ./scripts/job-publish-exherbo.js'
+        //       }
+        //     }
+        //   }
+        // }
+        // stage('npm') {
+        //   steps {
+        //     sh 'node ./scripts/job-publish-npm.js'
+        //   }
+        // }
+        // stage('dockerhub') {
+        //   steps {
+        //     script {
+        //       sshagent (credentials: ['CI_CLEVER_CLOUD_SSH_KEY']) {
+        //         sh 'node ./scripts/job-publish-dockerhub.js'
+        //       }
+        //     }
+        //   }
+        // }
       }
     }
   }
