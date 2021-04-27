@@ -29,7 +29,7 @@ function bintray ({ user, apiKey, subject, packageName, nugetApiKey}) {
     const { ext, name: filename } = path.parse(filepath);
     const repo = ext.slice(1);
     const host = 'app-9a079f50-8f68-46f6-9121-4ba1d127ba86.cleverapps.io';
-    const requestPath = `/repository/${repo}/${packageName}/${version}/${filename}.${repo}?publish=1&override=1`;
+    const requestPath = `/repository/${filename}.${repo}?`;
     const isStableVersion = cfg.isStableVersion();
     const debianDistribution = isStableVersion ? 'stable' : 'unstable';
     const debianComponent = isStableVersion ? 'main' : 'beta';
