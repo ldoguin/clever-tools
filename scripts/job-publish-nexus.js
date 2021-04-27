@@ -16,7 +16,7 @@ async function run () {
     nugetApiKey: cfg.getNugetApiKey(),
   });
 
-  await uploadToBintray({ filepath: cfg.getBundleFilepath('rpm', version), version });
+  await uploadToBintray({ filepath: cfg.getBundleFilepath('yum', version), version });
   await uploadToBintray({ filepath: cfg.getBundleFilepath('deb', version), version });
   await uploadToBintray({ filepath: cfg.getBundleFilepath('nupkg', version), version: nupkgVersion });
 }
@@ -29,7 +29,7 @@ function bintray ({ user, apiKey, subject, packageName }) {
     const { ext, name: filename } = path.parse(filepath);
     const repo = ext.slice(1);
     const host = 'app-9a079f50-8f68-46f6-9121-4ba1d127ba86.cleverapps.io';
-    const requestPath = `/repository/${subject}/${repo}/${packageName}/${version}/${filename}.${repo}?publish=1&override=1`;
+    const requestPath = `/repository/${repo}/${packageName}/${version}/${filename}.${repo}?publish=1&override=1`;
     const isStableVersion = cfg.isStableVersion();
     const debianDistribution = isStableVersion ? 'stable' : 'unstable';
     const debianComponent = isStableVersion ? 'main' : 'beta';
@@ -47,7 +47,7 @@ function bintray ({ user, apiKey, subject, packageName }) {
         'X-Bintray-Debian-Distribution': debianDistribution,
         'X-Bintray-Debian-Component': debianComponent,
         'X-Bintray-Debian-Architecture': 'amd64',
-        'X-NuGet-ApiKey': nugetApiKey,
+        'X-NuGet-ApiKey': `${nugetApiKey}`,
       },
     });
   };
