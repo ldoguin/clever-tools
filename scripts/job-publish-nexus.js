@@ -21,7 +21,7 @@ async function run () {
   await uploadToBintray({ filepath: cfg.getBundleFilepath('nupkg', version), version: nupkgVersion });
 }
 
-function bintray ({ user, apiKey, subject, packageName }) {
+function bintray ({ user, apiKey, subject, packageName, nugetApiKey}) {
 
   const basicAuth = Buffer.from(`${user}:${apiKey}`).toString('base64');
 
