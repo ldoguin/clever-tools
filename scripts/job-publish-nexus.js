@@ -16,7 +16,7 @@ async function run () {
     nugetApiKey: cfg.getNugetApiKey(),
   });
 
-  await uploadToBintray({ filepath: cfg.getBundleFilepath('yum', version), version });
+  await uploadToBintray({ filepath: cfg.getBundleFilepath('rpm', version), version });
   await uploadToBintray({ filepath: cfg.getBundleFilepath('deb', version), version });
   await uploadToBintray({ filepath: cfg.getBundleFilepath('nupkg', version), version: nupkgVersion });
 }
