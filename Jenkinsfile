@@ -40,11 +40,8 @@ pipeline {
         stage('nexus') {
           steps {
             // sh 'node scripts/job-publish-nexus.js'
-            sh 'curl -u "ci:$NEXUS_PASSWORD" --upload-file ./releases/$GIT_TAG_NAME/clever-tools-$GIT_TAG_NAME.rpm https://nexus.clever-cloud.com/repository/rpm/'
-            sh 'curl -u "ci:$NEXUS_PASSWORD"  -H "Content-Type: multipart/form-data" --data-binary "@./releases/$GIT_TAG_NAME/clever-tools-$GIT_TAG_NAME.deb" "http://nexus.clever-cloud.com/repository/deb/"'
-            sh 'curl -u "ci:$NEXUS_PASSWORD"  -X PUT -H "X-NuGet-ApiKey: $NUGET_API_KEY" -F "data=@./releases/$GIT_TAG_NAME/clever-tools.$GIT_TAG_NAME.nupkg" https://nexus.clever-cloud.com/repository/nuget/'
-
-          }
+            sh './scripts/job-publish-nexus.sh'
+           }
         }
         // stage('bintray') {
         //   steps {
